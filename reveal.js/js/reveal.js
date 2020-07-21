@@ -280,7 +280,7 @@
 			hideCursorTime: 5000,
 
 			// Script dependencies to load
-			dependencies: []
+			dependencies: [{ src: 'plugin/reveald3.js' }]
 
 		},
 

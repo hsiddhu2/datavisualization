@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<style>
+    div.tooltip {
+        position: absolute;
+        text-align: center;
+        font-size: small;
+        font-style: normal;
+        padding: 1px;
+        border: 1px solid #33ff00;
+        background: none repeat scroll 0 0 #410125;
+        color:aliceblue;
+        /*border: 1px solid steelblue;*/
+        pointer-events: none;
+    }
+</style>
+
+<body>
+    <script src="js/d3.v4.min.js"></script>
+    <script>
+        // const width = window.innerWidth;
+        // const height = Math.min(500, window.innerHeight);
+
+        var margin = { top: 20, right: 20, bottom: 30, left: 40 },
+            width = 960 - margin.left - margin.right,
+            height = 500 - margin.top - margin.bottom;
+
+
+        var groundHeight = 90;
+        var groundWidth = 75;
+        var heightPadding = 20;
+
+        var rheight = d3.scaleLinear()
+            .rangeRound([0, groundHeight]);
+
+        var rwidth = d3.scaleLinear()
+            .rangeRound([0, groundWidth]);
+
+        // const svg = d3.select("body").append("svg")
+        //     .style("border","solid")
+        //     .attr("width", width)
+        //     .attr("height", height);
+
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        function appendGrounds(countryID) {
+
+            d3.csv("datasets/grounds.csv", type, function (error, data) {
+                "use strict";
+                if (error) throw error;
+                rheight.domain([0, d3.max(data, function (d) { return d.height; })]);
+                rwidth.domain([0, d3.max(data, function (d) { return d.width; })]);
+
+                var filteredData = data.filter(function (d) { return d.country == countryID });
+                console.log(filteredData)
+
+                var divContainer = d3.select("body").append("g")
+                    .data(filteredData)
+                    .enter()
+                    .append("svg")
+                    .style("height", (groundHeight * 2) + heightPadding + "px")
+                    .attr("width", "22%")
+                    .attr("height", "100%");
+
+                var fieldContainer = divContainer.append("g")
+                    .attr("transform", "translate(150,100)")
+                    .append("ellipse")
+                    .attr("class", "ground")
+                    .attr("cx", 0)
+                    .attr("cy", 0)
+                    .attr("rx", function (d) { return rwidth(d.width); })
+                    .attr("ry", function (d) { return rheight(d.height); })
+                    .attr("fill", "#397D02")
+
+                var boundaryContainer = divContainer.append("g")
+                    .attr("transform", "translate(150,100)")
+                    .append("ellipse")
+                    .attr("class", "boundary")
+                    .attr("cx", 0)
+                    .attr("cy", 0)
+                    .attr("rx", function (d) { return rwidth(d.width) - 3; })
+                    .attr("ry", function (d) { return rheight(d.height) - 3; })
+                    .attr("fill", "none")
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 1.5)
+                    .attr("opacity", 0)
+                    .transition().duration(2000).delay(0)
+                    .attr("opacity", 1);
+
+                var pitchContainer = divContainer.append("g")
+                    .attr("transform", "translate(150,100)")
+                    .append("rect")
+                    .attr("class", "pitch")
+                    .attr("x", "-1%")
+                    .attr("y", "-3%")
+                    .attr("width", "10px")
+                    .attr("height", "20px")
+                    .attr("fill", "#ad5b47")
+                    .attr("opacity", 1)
+                    // .transition().duration(2000).delay(500)
+                    // .attr("opacity", 1)
+                    .on("mouseover", function (d) {
+                        tooltip.style("left", (d3.event.pageX - 5) + "px")
+                            .style("top", (d3.event.pageY - 5) + "px")
+                            .style("width", "1px")
+                            .style("height", "1px")
+                            .transition()
+                            .transition().ease(d3.easeElasticOut).duration(1000)
+                            .style("opacity", 0.9)
+                            .style("display", "display")
+                            .style("left", (d3.event.pageX + 17) + "px")
+                            .style("top", (d3.event.pageY - 78) + "px")
+                            .style("width", "160px")
+                            .style("height", "95px")
+                            .on("end", function () {
+                                tooltip.html(
+                                    "Established in: " + d.established +"<br>"+
+                                    "Total Capacity: " + d.capacity +"<br>"+
+                                    "Day Nights Matches: " + d.floodlights +"<br>"+
+                                    "Location In India: " + d.location +"<br>"+
+                                    "HomeTeam Win % : " + d.winratio +"<br>"+
+                                    "Total Matches: " + d.totalmatches)
+                            });
+                    })
+                    .on("mouseout", function (d) {
+                        tooltip.transition()
+                            .duration(100)
+                            .style("left", (d3.event.pageX - 5) + "px")
+                            .style("top", (d3.event.pageY - 5) + "px")
+                            .style("opacity", 0)
+                            .style("width", "1px")
+                            .style("height", "1px");
+
+                        tooltip.selectAll(".tooltipText").remove();
+                    })
+                    ;
+
+                var groundText = divContainer.append("g")
+                    .attr("transform", "translate(150,100)")
+                    .append("text")
+                    .attr("x", "%")
+                    .attr("y", "25%")
+                    .text(function (d) { return d.ground })
+                    .attr("dy", "-1.5em")
+                    .attr("font-family", "sans-serif")
+                    .attr("font-size", "10px")
+                    .attr("fill", "white")
+                    .attr("text-anchor", "middle")
+                    .attr("opacity", 0)
+                    .transition().duration(100).delay(100)
+                    .attr("opacity", 1);
+
+            });
+        };
+        function type(d) {
+            d.height = +d.height;
+            d.width = +d.width;
+            return d;
+        };
+
+        var countries = ["Ind"];
+
+        for (var i = 0; i < countries.length; i++) {
+            appendGrounds(countries[i]);
+        }
+    </script>

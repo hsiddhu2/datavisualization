@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <style>
+    :root {
+      --var-color-grey: #898989;
+    }
+
+    body {
+      margin: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      font-family: Helvetica;
+      ;
+    }
+
+    text {
+      font-family: Helvetica;
+      color: var(--var-color-grey);
+    }
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: var(--var-color-grey);
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis {
+      font-size: 15px;
+    }
+
+    .y.axis {
+      font-size: 12px;
+    }
+
+    .toolTip {
+      position: absolute;
+      display: none;
+      font-size: small;
+      font-style: italic;
+      color: aliceblue;
+      min-width: 80px;
+      height: auto;
+      background: none repeat scroll 0 0 #410125;
+      padding: 1px;
+      text-align: center;
+    }
+  </style>
+
+
+  </style>
+
+<body>
+  <!-- <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="js/d3.v4.min.js"></script> -->
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script>
+
+    // var margin = {top: 40, right: 30, bottom: 30, left: 50},
+    //     width = 460 - margin.left - margin.right,
+    //     height = 320 - margin.top - margin.bottom;
+
+    var margin = { top: 10, right: 30, bottom: 90, left: 40 },
+      width = 550 - margin.left - margin.right,
+      height = 550 - margin.top - margin.bottom;
+
+    var greyColor = "#898989";
+    var barColor = d3.interpolateGreens(0.5);
+    var highlightColor = d3.interpolateGreens(0.8);
+
+    var formatPercent = d3.format(".0%");
+
+    var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+
+    d3.csv("datasets/totalmatches.csv", function (data) {
+
+      var x = d3.scaleBand()
+        .range([0, width])
+        .domain(data.map(function (d) { return d.year; }))
+        .padding(0.4);
+
+      var y = d3.scaleLinear()
+        .range([height, 0])
+        .domain([0, 100]);
+
+      var color = d3.scaleOrdinal()
+        .range(["#ca0020"]);
+
+      svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x));
+      svg.append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(y));
+
+      svg.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .style("display", d => { return d.count === null ? "none" : null; })
+        .style("fill", d => {
+          return d.count === d3.max(data, d => { return d.count; })
+            ? highlightColor : barColor
+        })
+        .attr("x", d => { return x(d.year); })
+        .attr("width", x.bandwidth())
+        .attr("y", d => { return height; })
+        .attr("height", 0)
+        .transition()
+        .duration(750)
+        .delay(function (d, i) {
+          return i * 150;
+        })
+        .attr("y", d => { return y(d.count); })
+        .attr("height", d => {
+          return height - y(d.count)
+        });
+      svg.selectAll(".bar")
+        .data(data)
+        .on("mousemove", function (d) {
+          tooltip
+            .style("left", d3.event.pageX - 50 + "px")
+            .style("top", d3.event.pageY - 70 + "px")
+            .style("display", "inline-block")
+            .html("Winner: " + (d.Winner) + "<br>" + "# of Teams: " + (d.teams))
+          barColor
+          d3.select(this).style("fill", d3.rgb(color(d.Winner)).darker(2));
+        })
+        .on("mouseout", function (d) {
+          tooltip.style("display", "none");
+          barColor
+          d3.select(this).style("fill", d => {
+            return d.count === d3.max(data, d => { return d.count; })
+              ? highlightColor : barColor
+          });
+        });
+
+      svg.selectAll(".label")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("class", "label")
+        .style("display", d => { return d.count === null ? "none" : null; })
+        .attr("x", (d => { return x(d.year) + (x.bandwidth() / 2) - 8; }))
+        .style("fill", d => {
+          return d.count === d3.max(data, d => { return d.count; })
+            ? highlightColor : greyColor
+        })
+        .attr("y", d => { return height; })
+        .attr("height", 0)
+        .transition()
+        .duration(750)
+        .delay((d, i) => { return i * 150; })
+        .text(d => { return d.count; })
+        .attr("y", d => { return y(d.count) + .1; })
+        .attr("dy", "-.7em");
+
+      // text label for the x axis
+      svg.append("text")
+        .attr("transform", "translate(" + (width / 2) + " ," +
+          (height + margin.top + 40) + ")")
+        .style("text-anchor", "middle")
+        .text("Year");
+
+      // text label for the y axis
+      svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -5 - margin.left)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Match Counts");
+    });
+  </script>
+</body>

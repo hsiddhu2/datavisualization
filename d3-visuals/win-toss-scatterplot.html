@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="js/d3_annotation.js"></script>
+
+<html>
+
+<body>
+    <h1>Seems like Mumbai Indian's Fate Supported Them Most</h1>
+
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <style>
+        body {
+            font: 12px sans-serif;
+            font-weight: bold;
+            color: rgb(0, 0, 0);
+            background-color: none repeat scroll 0 0 #410125;
+            text-align: center;
+            height: auto;
+        }
+
+        .text-label {
+            position: absolute;
+            font-size: 8px;
+            font-style: italic;
+            color: aliceblue;
+            min-width: 80px;
+            height: auto;
+            background: none repeat scroll 0 0 #410125;
+            border: 1px solid #33ff00;
+            padding: 1px;
+            text-align: center;
+        }
+
+        .toolTip {
+            position: absolute;
+            display: none;
+            font-size: small;
+            font-style: italic;
+            color: aliceblue;
+            min-width: 80px;
+            height: auto;
+            background: none repeat scroll 0 0 #410125;
+            padding: 1px;
+            text-align: center;
+        }
+
+        /* /* .y path {
+            fill: #efefef;
+        } */
+
+        .axis line {
+            stroke: #0e3f02;
+            stroke-dasharray: 1;
+            stroke-opacity: .5;
+        } */
+    </style>
+
+</body>
+<script>
+
+    var margin = { top: 20, right: 70, bottom: 40, left: 40 };
+
+    var width = 600 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // ==== LEFT ====== //
+    const annotations = [
+        {
+            note: {
+                label: "Lowest Win % After Winning Toss",
+                title: "Kings XI Punjab"
+            },
+            type: d3.annotationCalloutCircle,
+            subject: {
+                radius: 15,         // circle radius
+                radiusPadding: 20   // white space around circle befor connector
+            },
+            color: ["rgb(255, 140, 56)"],
+            x: 333.20,
+            y: 204,
+            dy: 50,
+            dx: 50
+        }
+    ]
+
+
+    // Add annotation to the chart
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations)
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .call(makeAnnotations)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+
+    var xScale = d3.scaleLinear()
+        .domain([0, 100])
+        .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+        .domain([0, 70])
+        .range([height, 0]);
+
+
+    var xAxis = d3.axisBottom(xScale)
+        .tickSize(-height);
+
+    var yAxis = d3.axisLeft(yScale)
+        .tickSize(-width);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", 0 - height / 2)
+        .attr("y", -35)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .style('font-weight', 'bold')
+        .style("fill", "black")
+        .text("Match Wins");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("transform", "translate(250,20)")
+        .attr("y", height + margin)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+        .style('font-weight', 'bold')
+        .style("fill", "black")
+        .text("Toss Wins");
+
+    d3.select(".y")
+        .select("text")
+        .remove()
+
+    var colorScale = d3.scaleSequential(d3.interpolateRainbow);
+
+    d3.csv("datasets/tosswins.csv", function (error, data) {
+
+        if (error) return console.warn(error);
+
+        colorScale.domain([0, 12])
+
+        var circleGroups = svg.selectAll(".circleGroups")
+            .data(data)
+            .enter().append("g")
+            .attr("class", "circle")
+            .attr("transform", function (d) { return "translate(" + xScale(d.tosswin) + "," + yScale(d.matchwin) + ")" })
+            .on("mouseenter", function (d) {
+
+                tooltip
+                    .style("left", d3.event.pageX - 50 + "px")
+                    .style("top", d3.event.pageY - 70 + "px")
+                    .style("display", "inline-block")
+                    .html("Team Name: " + d.team + "<br> Toss Won: " + (d.tosswin)
+                        + "<br>" + "Matches Won: " + (d.matchwin) + "<br> Win %: " + d.winp)
+
+                d3.selectAll("circle")
+                    .style("fill-opacity", .5);
+
+                d3.select(this)
+                    .select("circle")
+                    .transition()
+                    .ease(d3.easeElastic)
+                    .attr("r", 15)
+                    .style("fill-opacity", 1);
+            })
+            .on("mouseleave", function (d) {
+
+                tooltip.style("display", "none");
+
+                d3.select(this)
+                    .select("circle")
+                    .transition()
+                    .ease(d3.easeElastic)
+                    .attr("r", 10)
+
+                d3.selectAll("circle")
+                    .style("fill-opacity", 1);
+            })
+
+        var radiusSize = 10;
+
+        circleGroups.append("circle")
+            .attr("r", radiusSize)
+            .style("fill", function (d, i) { return colorScale(i); })
+
+        //Legend
+        var legend = svg.selectAll(".legend")
+            .data(data.map(function (d) { return d.team; }))
+            .enter().append("g")
+            .attr("class", "legend")
+            .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"; })
+            .style("opacity", "0");
+
+        legend.append("rect")
+            .data(data.map(function (d) { return d.team; }))
+            .attr("x", width + 55)
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", function (d, i) { return colorScale(i); });
+
+        legend.append("text")
+            .attr("x", width + 45)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .style("text-anchor", "end")
+            .text(function (d) { return d; });
+
+        legend.transition().duration(500).delay(function (d, i) { return 1300 + 100 * i; }).style("opacity", "1");
+
+    })
+
+</script>

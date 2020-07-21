@@ -1,0 +1,207 @@
+[
+    {
+        "categorie": "Mumbai Indian", 
+        "values": [
+            {
+                "value": 187, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 109, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 58.29, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Sun Risers Hyderabad", 
+        "values": [
+            {
+                "value": 183, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 100, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 54.64, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Royal Challengers Banglore", 
+        "values": [
+            {
+                "value": 180, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 92, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 51.11, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Kolkata Knight Riders", 
+        "values": [
+            {
+                "value": 178, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 87, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 48.88, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Deccan Chargers", 
+        "values": [
+            {
+                "value": 177, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 84, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 47.46, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Kings XI Punjab", 
+        "values": [
+            {
+                "value": 176, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 82, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 46.59, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Chennai Super Kings", 
+        "values": [
+            {
+                "value": 164, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 77, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 46.95, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Rajasthan Royals", 
+        "values": [
+            {
+                "value": 164, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 77, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 46.95, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Delhi DareDevils", 
+        "values": [
+            {
+                "value": 63, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 21, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 33.33, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Pune Warriors", 
+        "values": [
+            {
+                "value": 20, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 6, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 30.00, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+
+    {
+        "categorie": "Gujrat Lions", 
+        "values": [
+            {
+                "value": 14, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 1, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 7.14, 
+                "type": "WIN Percentage"
+            }
+        ]
+    },
+    {
+        "categorie": "Rising Pune SuperGaints", 
+        "values": [
+            {
+                "value": 15, 
+                "type": "Matches Played"
+            }, 
+            {
+                "value": 5, 
+                "type": "Matches WON"
+            }, 
+            {
+                "value": 33.33, 
+                "type": "WIN Percentage"
+            }
+        ]
+    }
+]

@@ -97,6 +97,9 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "reveald3": "^1.5.5"
+    "reveald3": "^1.5.5",
+    "src": "node_modules/reveald3/reveald3.js"
   }
+  
+
 }

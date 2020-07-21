@@ -1,8 +1,8 @@
 {
-  "name": "reveal.js",
-  "version": "4.0.2",
-  "description": "The HTML Presentation Framework",
-  "homepage": "https://revealjs.com",
+  "name": "datavisualizationwithd3.js",
+  "version": "1.0.0",
+  "description": "Indian Premier Leage Data Analysis Using D3.js - CS498 Assignment Final Project Work.",
+  "homepage": "https://hsiddhu2.github.io/datavisualization/",
   "subdomain": "revealjs",
   "main": "dist/reveal.js",
   "module": "dist/reveal.esm.js",
@@ -13,9 +13,9 @@
     "build": "gulp"
   },
   "author": {
-    "name": "Hakim El Hattab",
-    "email": "hakim.elhattab@gmail.com",
-    "web": "https://hakim.se"
+    "name": "Harpreet Singh Siddhu",
+    "email": "hpsiddhu@gmail.com",
+    "web": "https://digitalharpreet.com"
   },
   "repository": {
     "type": "git",

@@ -6,14 +6,51 @@
     <link rel="stylesheet" href="reveal.js/css/theme/white.css">
     <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css" />
     <link rel="stylesheet" href="reveal.js/css/custom-gc.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .btn {
+            background-color: DodgerBlue;
+            border: none;
+            color: white;
+            padding: 12px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            align-items: flex-start;
+        }
+
+        /* Darker background on mouse-over */
+        .btn:hover {
+            background-color: rgb(16, 230, 8);
+        }
+    </style>
 </head>
 
 <body>
     <div class="reveal">
         <div class="slides">
 
+            <section><br>
+                <h1 style="text-align: center; color:rgb(0, 0, 0); font-weight: 600;" ;>
+                    <small>Interactive Visualization with D3.js</small>
+                </h1><br>
+                <p style="text-align: center; color:black; font-size: 44px; font-weight: 400;">
+                    <small>
+                        Compiled by <a href="https://www.linkedin.com/in/harpreetsiddhu">Harpreet Siddhu</a>
+                        for the <a href="https://www.coursera.org/learn/datavisualization">Data Visualization</a> <br />
+                        Course at University of Illinois Urbana Champaign
+                    </small>
+                </p>
+                <br />
+                <p
+                    style="text-align: center; color:black; font-size: 44px; font-weight: 400; background-color: aquamarine;">
+                    <small>The visualizations are based on publicly available data On Indian Premier League (IPL)<br>
+                        which I will be using to visualize teams and players stats!</small><br>
+                <p><br><br>Please press right arrow or space for next slide.</p>
+                </p>
+            </section>
+
             <section>
-                <h3>Indian Premier League</h3>
+                <h3 style="text-decoration: underline;">Indian Premier League</h3>
                 <div class="row" style="margin-top: 0">
                     <div class="col-100">
                         <p class="small" style="font-size: 14; text-align: justify; color: black;" ;>The Indian Premier
@@ -112,10 +149,15 @@
                             </h3>
                             <p style="font-size: 14; text-align: justify; color: black;" ;>
                             <ul style="font-size: 14; text-align: justify; color: black; padding-inline-start: 5px;" ;>
-                                <li>In 2008, when IPL initially started, because of new gaming format there used to be less power hittings showing the downward graph. </li><br>
-                                <li>In most IPL seasons, the West Indies players used to show a great deal of power hitting. Players like Chris Gayle and Andre Russels used to top the most sixers chart. </li><br>
-                                <li>Rishabh Pant is the only player in all IPL seasons who topped in both maximum sixes and maximum fours in 2018 IPL Season. </li><br>
-                                <li style="font-weight: bold;">Pragyan Ojha just tool 21 wickets (lowest in all IPL seasons) but still topped the most wicket taker chart in 2010.</li>
+                                <li>In 2008, when IPL initially started, because of new gaming format there used to be
+                                    less power hittings showing the downward graph. </li><br>
+                                <li>In most IPL seasons, the West Indies players used to show a great deal of power
+                                    hitting. Players like Chris Gayle and Andre Russels used to top the most sixers
+                                    chart. </li><br>
+                                <li>Rishabh Pant is the only player in all IPL seasons who topped in both maximum sixes
+                                    and maximum fours in 2018 IPL Season. </li><br>
+                                <li style="font-weight: bold;">Pragyan Ojha just tool 21 wickets (lowest in all IPL
+                                    seasons) but still topped the most wicket taker chart in 2010.</li>
                             </ul>
                             </p>
                         </div>
@@ -134,18 +176,23 @@
                             </h3>
                             <p style="font-size: 14; text-align: justify; color: black;" ;>
                             <ul style="font-size: 14; text-align: justify; color: black; padding-inline-start: 5px;" ;>
-                                <li>CSK aka Chennai Super Kings performed consistently in all IPL season(See Green).</li><br>
+                                <li>CSK aka Chennai Super Kings performed consistently in all IPL season(See Green).
+                                </li><br>
                                 <li>DC aka Deccan Charges consistently performing better each year (See Pink).</li><br>
-                                <li>SRH aka Sun Risers Hyderabad started playing IPL in 2013 when there were 12 IPL teams participated.</li><br>
-                                <li style="font-weight: bold;">RCB aka Royal Challengers Banglore had worst last 3 IPL seasons.</li><br>
-                                <li style="font-weight: bold;">KKR aka Kolkata Knight Riders and MI aka Mumbai Indians had worst first two IPL seasons but now they are 
+                                <li>SRH aka Sun Risers Hyderabad started playing IPL in 2013 when there were 12 IPL
+                                    teams participated.</li><br>
+                                <li style="font-weight: bold;">RCB aka Royal Challengers Banglore had worst last 3 IPL
+                                    seasons.</li><br>
+                                <li style="font-weight: bold;">KKR aka Kolkata Knight Riders and MI aka Mumbai Indians
+                                    had worst first two IPL seasons but now they are
                                     the one of the strong teams in IPL.</li>
                             </ul>
                             </p>
                         </div>
                     </div>
                     <div class="col-50 no-margin-top">
-                        <div class="fig-container no-margin-top" style="width: 500px" data-file="d3-visuals/points-area-chart.html"></div>
+                        <div class="fig-container no-margin-top" style="width: 500px"
+                            data-file="d3-visuals/points-area-chart.html"></div>
                     </div>
                     <div class="no-margin-top" style="position: absolute; top: 620px">
                         <p>
@@ -165,23 +212,67 @@
                             </h3>
                             <p style="font-size: 14; text-align: justify; color: black;" ;>
                             <ul style="font-size: 14; text-align: justify; color: black; padding-inline-start: 5px;" ;>
-                                <li>Its evident that Mumbai Indians have won toss maximum number of times but their WIN% is not that high.</li><br>
-                                <li>Chennai Super Kings is the second best even after lossing the toss compared to Mumbai Indians.</li><br>
-                                <li>Gujrat Lions win % after winning toss is the highest among all teams in the IPL so far.</li><br>
-                                <li style="font-weight: bold;">RCB aka Royal Challengers Banglore is the only team who has won half of their games winning the toss and lost the same number of games.</li><br>
-                                <li style="font-weight: bold;">Kings XI Punjab is the only team with who lost most number of games even after winning the toss (see annotation).</li>
+                                <li>Its evident that Mumbai Indians have won toss maximum number of times but their WIN%
+                                    is not that high.</li><br>
+                                <li>Chennai Super Kings is the second best even after lossing the toss compared to
+                                    Mumbai Indians.</li><br>
+                                <li>Gujrat Lions win % after winning toss is the highest among all teams in the IPL so
+                                    far.</li><br>
+                                <li style="font-weight: bold;">RCB aka Royal Challengers Banglore is the only team who
+                                    has won half of their games winning the toss and lost the same number of games.</li>
+                                <br>
+                                <li style="font-weight: bold;">Kings XI Punjab is the only team with who lost most
+                                    number of games even after winning the toss (see annotation).</li>
                             </ul>
                             </p>
                         </div>
                     </div>
                     <div class="col-50 no-margin-top">
-                        <div class="fig-container no-margin-top" style="width: 500px" data-file="d3-visuals/win-toss-scatterplot.html"></div>
+                        <div class="fig-container no-margin-top" style="width: 500px"
+                            data-file="d3-visuals/win-toss-scatterplot.html"></div>
                     </div>
                     <div class="no-margin-top" style="position: absolute; top: 620px">
                         <p>
                             Press right arrow or space for next slide.
                         </p>
                     </div>
+            </section>
+
+            <section>
+                <h3 style="text-decoration: underline; font-size: 36px;">References</h3>
+                <div class="row" style="margin-top: 0">
+                    <div class="col-100">
+                        <ol style="display: contents; color:rgb(0, 0, 0); font-size: 20px;">
+                            <li><a href = "https://bl.ocks.org/flunky/947f57ccf4b52ac661417b3f70067286">The Grammar of Narrative Visualization</a></li>
+                            <li><a href = "https://github.com/gcalmettes/reveal.js-d3">Reveal.js plugin to integrate any javascript-based visualization</a></li>
+                            <li><a href = "http://bl.ocks.org/phoebebright/3098488">D3 rescale axis example</a></li>
+                            <li><a href = "https://bl.ocks.org/bricedev/0d95074b6d83a77dc3ad">Grouped Bar chart</a></li>
+                            <li><a href = "https://bl.ocks.org/bytesbysophie/952a1003dd188410e9c6262b68a65f9a">Annimated Bar chart</a></li>
+                            <li><a href = "https://www.dashingd3js.com/">Dashing D3 - Learn D3 Faster</a></li>
+                            <li><a href = "http://nickqizhu.github.io/d3-cookbook/">Data Visualization with D3 Cookbook</a></li>
+                          </ol> 
+                    </div>
+                </div>
+                <br>
+                <h3 style="text-decoration: underline; font-size: 36px;">Data Courtesy</h3>
+                <div class="row" style="margin-top: 0">
+                    <div class="col-100">
+                        <ol style="display: contents; color:rgb(0, 0, 0); font-size: 20px;">
+                            <li><a href = "https://sportzwiki.com/cricket/indian-premier-league-2009-most-fours">Indian Premier League 2009: Most Fours - SportzWiki.Com</a></li>
+                            <li><a href = "hhttps://www.kaggle.com/manasgarg/ipl">Indian Premier League (Cricket) - "Manas Garg" Kaggle.Com</a></li>
+                        </ol> 
+                    </div>
+                </div>
+                <br>
+                <h3 style="text-decoration: underline; font-size: 36px;">Visualization Creator</h3>
+                <div class="row" style="margin-top: 0">
+                    <div class="col-100">
+                        <ol style="display: contents; color:rgb(0, 0, 0); font-size: 20px;">
+                            <li><a href = "https://www.linkedin.com/in/harpreetsiddhu">Harpreet Siddhu</a></li>
+                        </ol> 
+                    </div>
+                </div>
+
             </section>
 
 
@@ -236,7 +327,7 @@
             // Reveal.js plugins
             dependencies: [
 
-                {  src: 'plugin/reveald3.js' },
+                { src: 'plugin/reveald3.js' },
 
             ]
         });
